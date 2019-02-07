@@ -1,9 +1,9 @@
 <template>
     <div>
         <ul>
-            <li v-for="(value, index) in propsdata" :key="value.key">
-                <span class="item_txt">{{value.$item}}</span>
-                <button class="removeBtn" v-on:click="removeItems(value.key, index)">-</button>
+            <li v-for="(item, index) in propsdata" :key="item.key">
+                <span class="item_txt">{{item.value}}</span>
+                <button class="removeBtn" v-on:click="removeItems(item.key, index)">-</button>
             </li>
         </ul>
     </div>

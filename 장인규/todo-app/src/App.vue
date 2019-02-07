@@ -19,17 +19,14 @@ export default {
   },
   methods: {
     addTodoList($item) {
-      var ranKey = "k"+(new Date().getTime()).toString(); 
-      var data = {ranKey, $item};
-      this.todoListItems.push(data);//[ranKey.toString()] = $item;
-      localStorage.setItem(ranKey, $item);
-      //this.todoListItems.keys({String(ranKey),$item});
-     
+      var newKey = "k"+(new Date().getTime()).toString(); 
+      var data = {"key":newKey , "value":$item};
+      this.todoListItems.push(data);
+      localStorage.setItem(newKey, $item);     
     },
     removeTodoList($todoItem, $idx){
       localStorage.removeItem($todoItem);
       this.todoListItems.splice($idx,1);
-      //delete this.todoListItems[$todoItem];
     },
     removeAll(){
       localStorage.clear();
@@ -39,19 +36,11 @@ export default {
   created(){
     if(localStorage.length > 0){
       for(var i=0;i<localStorage.length;i++){
-        if(localStorage.key(i) === 'loglevel:webpack-dev-server') continue;
-
-        this.todoListItems.push(localStorage.key(i));
-        // var key = localStorage.key(i);
-        // var value = localStorage[localStorage.key(i)];
-        // var data = {key, value};
-
-        // console.log(key)
-        // console.log(value)
-        // this.todoListItems.push(data);
-
-        // console.log(this.todoListItems)
-        //this.todoListItems[localStorage.key(i)] = localStorage[localStorage.key(i)];
+        if(localStorage.key(i) === 'loglevel:webpack-dev-server') continue;        
+         var key = localStorage.key(i);
+         var value = localStorage[localStorage.key(i)];
+         var data = {"key":key , "value":value};
+        this.todoListItems.push(data);
       }
     }
   },
