@@ -2,7 +2,7 @@
   <div id="app">
     <todoHeader v-on:removeAll="removeAll"></todoHeader>
     <todoInput v-on:addItem="addTodoList"></todoInput>
-    <todoList v-bind:propsdata="todoListItems" v-on:removeItems="removeTodoList"></todoList>
+    <todoList v-bind:propsdata="todoListItems" v-on:removeItems="removeTodoList" v-on:toggleCheck="changeDone"></todoList>
   </div>
 </template>
 
@@ -14,33 +14,38 @@ import todoList from "./components/TodoList.vue";
 export default {
   data() {
     return {
-      todoListItems: []
+      todoListItems: [],
     };
   },
   methods: {
     addTodoList($item) {
-      var newKey = "k"+(new Date().getTime()).toString(); 
-      var data = {"key":newKey , "value":$item};
+      var newKey = "k" + new Date().getTime().toString();
+      var data = { key: newKey, value: $item, isDone: false };
       this.todoListItems.push(data);
-      localStorage.setItem(newKey, $item);     
+      localStorage.setItem(newKey, JSON.stringify(data));
     },
-    removeTodoList($todoItem, $idx){
+    removeTodoList($todoItem, $idx) {
       localStorage.removeItem($todoItem);
-      this.todoListItems.splice($idx,1);
+      this.todoListItems.splice($idx, 1);
     },
-    removeAll(){
+    removeAll() {
       localStorage.clear();
       this.todoListItems = [];
+    },
+    changeDone($todoItem, $idx, state) {
+      this.todoListItems[$idx].isDone = state
+      var data = this.todoListItems[$idx];
+      console.log(data)
+      localStorage.setItem($todoItem, JSON.stringify(data));
     }
   },
-  created(){
-    if(localStorage.length > 0){
-      for(var i=0;i<localStorage.length;i++){
-        if(localStorage.key(i) === 'loglevel:webpack-dev-server') continue;        
-         var key = localStorage.key(i);
-         var value = localStorage[localStorage.key(i)];
-         var data = {"key":key , "value":value};
-        this.todoListItems.push(data);
+  created() {
+    if (localStorage.length > 0) {
+      for (var i = 0; i < localStorage.length; i++) {
+        if (localStorage.key(i) === "loglevel:webpack-dev-server") continue;
+        var strData = localStorage[localStorage.key(i)];
+        var jsonObj = JSON.parse(strData);
+        this.todoListItems.push(jsonObj);
       }
     }
   },
@@ -57,5 +62,4 @@ body {
   text-align: center;
   background-color: rgb(36, 36, 36);
 }
-
 </style>

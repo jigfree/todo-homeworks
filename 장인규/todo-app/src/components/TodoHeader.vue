@@ -24,7 +24,7 @@ export default {
 }
 
 .topArea .title {
-  color: white;
+  color: rgb(231, 250, 106);;
   position: relative;
   height: 30px;
 }
@@ -32,10 +32,16 @@ export default {
   float: right;
   height: 30px;
   width: 3.5rem;
-  background: rgb(96, 96, 96);
+  background: rgb(28, 28, 28);
   font-size: 0.9rem;
-  border-radius: 0px;
-  color: rgb(255, 255, 255);
+  border-radius: 6px;
+  color: rgb(231, 250, 106);
+  cursor: pointer;
+}
+.removeAllBtn:hover{
+  color: rgb(28, 28, 28);
+  background: rgb(231, 250, 106);
+  font-weight: bold;
 }
 .removeAllBtn:focus {
   outline: none;
